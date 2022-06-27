@@ -12,55 +12,60 @@ import ListPage from './ListPage';
 import CreatePage from './CreatePage';
 import UpdatePage from './UpdatePage';
 import { logout } from './services/Fetch-utils';
+import { client } from './services/client';
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState(localStorage.getItem('supabase.auth.token'));
+  const [user, setUser] = useState(client.auth.user());
   
+  async function handleLogoutClick() {
+    await logout();
+    setUser('');
+  }
+
   return (
     <Router>
       <div>
-        {
-          currentUser &&
+        <nav>
           <ul>
             <li>
-              <Link to="/list">List Page</Link>
+              <Link to="/">Sign In</Link>
             </li>
             <li>
-              <Link to="/create">Create Page</Link>
+              <Link to="/create">Create New Movie</Link>
             </li>
             <li>
-              <button onClick={logout}>Logout</button>
+              <Link to="/movies/1">Update a Movie</Link>
+            </li>
+            <li>
+              <Link to="/movies">List of Your Movies</Link>
+            </li>
+            <li>
+              {user && 
+            <button onClick={handleLogoutClick}>Logout</button>}
             </li>
           </ul>
-        }
+        </nav>
+
         <Switch>
           <Route exact path="/">
             {
-              currentUser
-                ? <Redirect to="list"/>
-                : <HomePage setCurrentUser={setCurrentUser} />
+              !user
+                ? <HomePage setUser={setUser} />
+                : <Redirect to="/movies" />
             }
           </Route>
-          <Route exact path="/list">
+          <Route exact path="/movies/:id">
+            <UpdatePage />
+          </Route>
+          <Route exact path="/movies">
             {
-              !currentUser
-                ? <Redirect to="/"/>
-                : <ListPage />
+              user 
+                ? <ListPage /> 
+                : <Redirect to="/" />
             }
           </Route>
           <Route exact path="/create">
-            {
-              !currentUser
-                ? <Redirect to="/"/>
-                : <CreatePage />
-            }
-          </Route>
-          <Route exact path="/edit/:id">
-            {
-              !currentUser 
-                ? <Redirect to="/"/>
-                : <UpdatePage />
-            }
+            <CreatePage />
           </Route>
         </Switch>
       </div>
