@@ -31,7 +31,30 @@ export default function HomePage({ setCurrentUser }) {
     clearForms();
   }
   return (
-    <div> Home Page</div>
+    <div className='home-page'>
+      <form onSubmit={handleSignUp}>
+        <label>
+            Email
+          <input value={signUpEmail} onChange={e => setSignUpEmail(e.target.value)} />
+        </label>
+        <label>
+          Password
+          <input value={signUpPassword} type='password' onChange={e => setSignUpPassword(e.target.value)} />
+        </label>
+        <button>Sign Up</button>
+      </form>
+      <form onSubmit={handleSignIn}>
+        <label>
+          Email
+          <input value={signInEmail} onChange={e => setSignInEmail(e.target.value)} />
+        </label>
+        <label>
+          Password
+          <input value={signInPassword} type='password' onChange={e => setSignInPassword(e.target.value)} />
+        </label>
+        <button>Sign In</button>
+      </form>
+    </div>
   );
 
 }
