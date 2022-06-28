@@ -1,28 +1,66 @@
 import { client } from './client';
 
-export async function signUpUser(email, password) {
-  const response = await client.auth.signUp({ email, password });
-
-  return response.user;
-}
-
-export async function signInUser(email, password){
-  const response = await client.auth.signIn({ email, password });
-  
-  return response.user;
-}
-
-export async function logout() {
-  await client.auth.signOut();
-  
-  return window.location.href = '/';
-}
 
 export async function createMovie(movie) {
-  const { data } = await client
+  const { data, error } = await client
     .from('movies_table')
     .insert(movie)
     .single();
 
   return data;
+}
+
+export async function getMovies() {
+  const { data, error } = await client
+    .from('movies_table')
+    .select('*');
+
+  return data;
+}
+
+export async function updateMovie(movie, id) {
+  const { data, error } = await client
+    .from('movies_table')
+    .update(movie)
+    .match({ id: id })
+    .single();
+
+  return data;
+}
+
+export async function getMovieById(id) {
+  const { data, error } = await client
+    .from('movies_table')
+    .select('*')
+    .match({ id })
+    .single();
+
+  return data; 
+}
+
+export async function signUpUser(email, password) {
+  const { user, error } = await client.auth.signUp({
+    email: email,
+    password: password,
+  });
+
+  if (error) {
+    console.error(error);
+    throw error;
+  } else {
+    return user;
+  }
+
+}
+
+export async function signInUser(email, password){
+  const { user } = await client.auth.signIn({
+    email: email,
+    password: password,
+  });
+  return user;
+}
+
+export async function logout() {
+  const { error } = await client.auth.signOut();
 }

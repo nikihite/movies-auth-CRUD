@@ -12,11 +12,12 @@ export default function CreatePage() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const movie = await createMovie({
+    await createMovie({
       title: title,
       director: director,
       year: year,
       description: description
+
     });
 
     setTitle('');
