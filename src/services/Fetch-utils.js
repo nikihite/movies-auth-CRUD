@@ -1,8 +1,7 @@
 import { client } from './client';
 
-
 export async function createMovie(movie) {
-  const { data, error } = await client
+  const { data } = await client
     .from('movies_table')
     .insert(movie)
     .single();
@@ -11,7 +10,7 @@ export async function createMovie(movie) {
 }
 
 export async function getMovies() {
-  const { data, error } = await client
+  const { data } = await client
     .from('movies_table')
     .select('*');
 
@@ -19,7 +18,7 @@ export async function getMovies() {
 }
 
 export async function updateMovie(movie, id) {
-  const { data, error } = await client
+  const { data } = await client
     .from('movies_table')
     .update(movie)
     .match({ id: id })
@@ -28,8 +27,18 @@ export async function updateMovie(movie, id) {
   return data;
 }
 
+export async function deleteMovie(id) {
+  const { data } = await client
+    .from('movies_table')
+    .delete()
+    .match({ id: id })
+    .single();
+
+  return data;
+}
+
 export async function getMovieById(id) {
-  const { data, error } = await client
+  const { data } = await client
     .from('movies_table')
     .select('*')
     .match({ id })
@@ -63,4 +72,9 @@ export async function signInUser(email, password){
 
 export async function logout() {
   const { error } = await client.auth.signOut();
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
 }
