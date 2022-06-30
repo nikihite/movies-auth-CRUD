@@ -28,7 +28,7 @@ export default function CreatePage() {
   }
 
   return (
-    <div>
+    <div className='create-page'>
       <h3>
         <form onSubmit={handleSubmit}>
           <label>

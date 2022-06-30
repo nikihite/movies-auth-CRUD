@@ -29,10 +29,10 @@ export default function HomePage({ setUser }) {
 
   return (
     <div className='home-page'>
-      <h3>Nikis Flicks</h3>
+      <h3 className='nikis-flicks'>Nikis Flicks</h3>
       <h1 className='error'>{error}</h1>
-      <form onSubmit={handleSignUp}>
-        <p>Sign Up</p>
+      <form className="form" onSubmit={handleSignUp}>
+        <p className='sign-up'>Sign Up</p>
         <label>
           email
           <input onChange={e => setSignUpEmail(e.target.value)} value={signUpEmail} type="email" />
@@ -43,8 +43,8 @@ export default function HomePage({ setUser }) {
         </label>
         <button>Sign Up</button>
       </form>
-      <form onSubmit={handleSignIn}>
-        <p>Sign In</p>
+      <form className="form" onSubmit={handleSignIn}>
+        <p className='sign-in'>Sign In</p>
         <label>
           email
           <input onChange={e => setSignInEmail(e.target.value)} value={signInEmail} type="email" />

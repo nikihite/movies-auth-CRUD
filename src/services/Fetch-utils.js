@@ -54,7 +54,6 @@ export async function signUpUser(email, password) {
   });
 
   if (error) {
-    console.error(error);
     throw error;
   } else {
     return user;
@@ -74,7 +73,6 @@ export async function logout() {
   const { error } = await client.auth.signOut();
 
   if (error) {
-    console.error(error);
     throw error;
   }
 }

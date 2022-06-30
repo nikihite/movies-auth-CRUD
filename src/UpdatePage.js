@@ -48,7 +48,7 @@ export default function UpdatePage() {
   }
 
   return (
-    <div>
+    <div className='update-page'>
       <h2>Update a Movie</h2>
       <form onSubmit={handleSubmit}>
         <label>

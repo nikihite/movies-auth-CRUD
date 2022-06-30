@@ -14,7 +14,7 @@ export default function ListPage() {
     doFetch();
   }, []);
   return (
-    <div>
+    <div className='list-page'>
       {
         movies.map((movie, i) => <Movie movie={movie} key={movie.director + movie.title + i} />)
       }
